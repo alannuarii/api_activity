@@ -1,0 +1,19 @@
+CREATE TABLE activity
+(
+    id INT NOT NULL AUTO_INCREMENT,
+    tanggal DATE NOT NULL,
+    jenis VARCHAR(10) NOT NULL,
+    perusahaan VARCHAR(30) NOT NULL,
+    pekerjaan VARCHAR(75) NOT NULL,
+    kode VARCHAR(6) NOT NULL,
+    PRIMARY KEY (id) 
+)
+
+CREATE TABLE photo
+(
+    id INT NOT NULL AUTO_INCREMENT,
+    tanggal DATE NOT NULL,
+    kode VARCHAR(6) NOT NULL,
+    foto VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id)
+)

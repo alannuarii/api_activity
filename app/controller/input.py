@@ -2,7 +2,7 @@ import os
 from app import app
 from db import connection
 from flask import request
-from utils import generate_random_code
+from app.utils import generate_random_code
 
 
 class Input:
@@ -16,7 +16,7 @@ class Input:
 
         self.insert_data(tanggal, jenis, perusahaan, pekerjaan, kode)
 
-        for photo, index in photos:
+        for index, photo in enumerate(photos):
             name_photo = self.rename_photo(pekerjaan, tanggal, kode, index)
             self.insert_photo(tanggal, kode, name_photo)
             photo.save(os.path.join(app.config['FOTO'], name_photo))
@@ -31,7 +31,7 @@ class Input:
         connection(query, 'insert', value)
 
     def insert_photo(self, tanggal, kode, foto):
-        query = f"INSERT INTO activity (tanggal, kode, foto) VALUES (%s, %s, %s)"
+        query = f"INSERT INTO photo (tanggal, kode, foto) VALUES (%s, %s, %s)"
         value = [tanggal, kode, foto]
         connection(query, 'insert', value)
 
