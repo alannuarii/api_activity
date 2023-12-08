@@ -19,6 +19,21 @@ def insert_data():
     return jsonify(response), 200
 
 
+@app.route('/input-photos/<kode>', methods=['GET','POST'])
+def insert_photos(kode):
+    if request.method == 'POST':
+        try:
+            obj_input = Input()
+            obj_input.upload_foto(kode)
+
+        except Exception as e:
+            error_response = {"message": "Data gagal terkirim", "error": str(e)}
+            return jsonify(error_response), 500
+
+    response = {"message": "Data berhasil dikirim"}
+    return jsonify(response), 200
+
+
 @app.route('/get-all-data')
 def get_all_data():
     try:

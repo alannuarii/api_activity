@@ -25,23 +25,34 @@ class Select:
         result = connection(query, 'select', value)
         return result
     
-
     def get_activity_param(self, kode):
-        query = f"""
-        SELECT
-            a.tanggal,
-            a.jenis,
-            a.perusahaan,
-            a.pekerjaan,
-            a.kode,
-            p.foto
-        FROM
-            activity a
-        JOIN
-            photo p ON a.kode = p.kode
-        WHERE
-            a.kode = %s
-        """
+        if self.check_foto(kode):
+            query = f"""
+            SELECT
+                a.tanggal,
+                a.jenis,
+                a.perusahaan,
+                a.pekerjaan,
+                a.kode,
+                p.foto
+            FROM
+                activity a
+            JOIN
+                photo p ON a.kode = p.kode
+            WHERE
+                a.kode = %s
+            """
+            value = [kode]
+            result = connection(query, 'select', value)
+            return result
+        else:
+            query = f"SELECT tanggal, jenis, perusahaan, pekerjaan FROM activity WHERE kode = %s"
+            value = [kode]
+            result = connection(query, 'select', value)
+            return result
+    
+    def check_foto(self, kode):
+        query = f"SELECT foto FROM photo WHERE kode = %s"
         value = [kode]
         result = connection(query, 'select', value)
         return result

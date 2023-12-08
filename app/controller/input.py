@@ -22,6 +22,15 @@ class Input:
                 self.insert_photo(tanggal, kode, name_photo)
                 photo.save(os.path.join(app.config['FOTO'], name_photo))
 
+    def upload_foto(self, kode):
+        tanggal = request.form.get('tanggal')
+        pekerjaan = request.form.get('pekerjaan')
+        photos = request.files.getlist('foto')
+        for index, photo in enumerate(photos):
+            name_photo = self.rename_photo(pekerjaan, tanggal, kode, index)
+            self.insert_photo(tanggal, kode, name_photo)
+            photo.save(os.path.join(app.config['FOTO'], name_photo))
+
     def rename_photo(self, pekerjaan, tanggal, random, index):
         rename = f"{pekerjaan.replace(' ','-')}-{tanggal}-{random}-{index + 1}.png"
         return rename
