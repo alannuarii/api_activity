@@ -16,10 +16,11 @@ class Input:
 
         self.insert_data(tanggal, jenis, perusahaan, pekerjaan, kode)
 
-        for index, photo in enumerate(photos):
-            name_photo = self.rename_photo(pekerjaan, tanggal, kode, index)
-            self.insert_photo(tanggal, kode, name_photo)
-            photo.save(os.path.join(app.config['FOTO'], name_photo))
+        if photos[0].filename != 'undefined':
+            for index, photo in enumerate(photos):
+                name_photo = self.rename_photo(pekerjaan, tanggal, kode, index)
+                self.insert_photo(tanggal, kode, name_photo)
+                photo.save(os.path.join(app.config['FOTO'], name_photo))
 
     def rename_photo(self, pekerjaan, tanggal, random, index):
         rename = f"{pekerjaan.replace(' ','-')}-{tanggal}-{random}-{index + 1}.png"

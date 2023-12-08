@@ -45,3 +45,17 @@ def get_all_activity():
     except Exception as e:
         error_response = {"message": "Terjadi kesalahan", "error": str(e)}
         return jsonify(error_response), 500
+    
+
+@app.route('/get-activity-param/<kode>')
+def get_activity_param(kode):
+    try:
+        obj_select = Select()
+        result = obj_select.get_activity_param(kode)
+
+        response = {"message": "Sukses", "data": result}
+        return jsonify(response), 200
+
+    except Exception as e:
+        error_response = {"message": "Terjadi kesalahan", "error": str(e)}
+        return jsonify(error_response), 500
