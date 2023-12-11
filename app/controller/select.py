@@ -1,5 +1,6 @@
 from db import connection
 
+
 class Select:
     def get_all_data(self):
         query = f"""
