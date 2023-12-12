@@ -5,6 +5,6 @@ load_dotenv()
 
 class Config(object):
     SECRET_KEY = os.getenv('SECRET_KEY')
-    FOTO = os.getenv('VOLUME')
+    FOTO = 'app/static/img'
     
     
