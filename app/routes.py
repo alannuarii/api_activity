@@ -2,7 +2,7 @@ from app import app
 from flask import jsonify, request
 from app.controller.input import Input
 from app.controller.select import Select
-
+from app.controller.check import Check
 
 @app.route('/input', methods=['GET','POST'])
 def insert_data():
@@ -69,6 +69,20 @@ def get_activity_param(kode):
         result = obj_select.get_activity_param(kode)
 
         response = {"message": "Sukses", "data": result}
+        return jsonify(response), 200
+
+    except Exception as e:
+        error_response = {"message": "Terjadi kesalahan", "error": str(e)}
+        return jsonify(error_response), 500
+    
+
+@app.route('/checkfile')
+def checkfile():
+    try:
+        obj_check = Check()
+        check = obj_check.check_delete()
+
+        response = {"message": "Sukses", "data": check}
         return jsonify(response), 200
 
     except Exception as e:
