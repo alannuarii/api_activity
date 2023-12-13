@@ -4,28 +4,35 @@ from db import connection
 
 
 class Check:
-    def check_delete(self):
+    def check_delete_data(self):
         dict_kode = self.get_kode()
         list_kode = [item["kode"] for item in dict_kode]
         for kode in list_kode:
-            result = self.check_file(kode)
-            return result
+            path_direktori = os.path.join(os.getcwd(), 'app', 'static', 'img')
+            pola_file = os.path.join(path_direktori, '*' + kode + '*')
+            files = glob.glob(pola_file)
+            if files:
+                pass
+            else:
+                self.delete_data(kode)
 
-    def check_file(self, kode):
-        # Tentukan path ke direktori app/static/img
+    def check_delete_file(self):
+        dict_kode = self.get_kode()
+        list_kode = [item["kode"] for item in dict_kode]
         path_direktori = os.path.join(os.getcwd(), 'app', 'static', 'img')
-
-        # Gunakan modul glob untuk mencari file dengan pola nama tertentu
-        pola_file = os.path.join(path_direktori, '*' + kode + '*')
-        files = glob.glob(pola_file)
-
-        # Jika ada file yang sesuai dengan pola, kembalikan True
-        if files:
-            pass
-        else:
-            self.delete_file(kode)
+        for file_name in os.listdir(path_direktori):
+            kode_file = file_name.split('-')[-2]
+            if kode_file not in list_kode:
+                path_file = os.path.join(path_direktori, file_name)
+                try:
+                    os.remove(path_file)
+                    print(f"File {file_name} telah dihapus")
+                except FileNotFoundError:
+                    print(f"File {file_name} tidak ditemukan")
+                except Exception as e:
+                    print(f"Terjadi kesalahan: {e}")
     
-    def delete_file(self, kode):
+    def delete_data(self, kode):
         query = f"DELETE FROM photo WHERE kode = %s"
         value = [kode]
         connection(query, 'delete', value)
