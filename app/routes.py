@@ -6,6 +6,7 @@ from app.controller.check import Check
 from app.controller.delete import Detele
 
 
+
 @app.route('/input', methods=['POST'])
 def insert_data():
     try:
